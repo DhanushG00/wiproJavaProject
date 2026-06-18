@@ -1,0 +1,16 @@
+package com.wipro.delivery_service.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
+
+@Data
+public class UsersDTO {
+	@NotBlank(message = "Username is required")
+	private String username;
+	@NotBlank(message = "Password is required")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$", message = "Password must contain uppercase, lowercase, number and min 6 characters")
+	private String password;
+	@NotBlank(message="Role is required")
+	private String roles;
+}

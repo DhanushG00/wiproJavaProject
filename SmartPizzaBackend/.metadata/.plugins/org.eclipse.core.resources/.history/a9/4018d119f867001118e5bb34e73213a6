@@ -1,0 +1,57 @@
+package com.wipro.auth_service.service;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@Service
+public class JwtService {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+
+    // Generate JWT Token
+    public String generateToken(String username, String role) {
+
+        return Jwts.builder()
+                .setSubject(username)                  // ✅ username
+                .claim("role", role)                  // ✅ role (IMPORTANT)
+                .setIssuedAt(new Date())              // ✅ issued time
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // ✅ expiry
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .compact();
+    }
+
+    // Extract all claims
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    // Extract username
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    // Extract role
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
+    //  Validate token (expiry check)
+    public boolean validateToken(String token) {
+        return !extractAllClaims(token)
+                .getExpiration()
+                .before(new Date());
+    }
+}

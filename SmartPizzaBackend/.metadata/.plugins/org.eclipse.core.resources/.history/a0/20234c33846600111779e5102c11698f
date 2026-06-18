@@ -1,0 +1,5 @@
+package com.wipro.auth_service.service;
+
+public class IUserImpl {
+
+}

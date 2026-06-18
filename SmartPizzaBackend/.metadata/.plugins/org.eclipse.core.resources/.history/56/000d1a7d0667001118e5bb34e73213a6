@@ -1,0 +1,11 @@
+package com.wipro.admin_service.exception;
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ExternalServiceException.class)
+    public ResponseEntity<?> handleExternal(ExternalServiceException ex) {
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(Map.of("error", ex.getMessage()));
+    }
+}

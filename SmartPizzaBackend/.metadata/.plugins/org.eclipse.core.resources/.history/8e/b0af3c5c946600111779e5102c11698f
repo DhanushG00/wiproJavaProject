@@ -1,0 +1,32 @@
+package com.wipro.delivery_service.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.wipro.delivery_service.entity.DeliveryAgent;
+import com.wipro.delivery_service.repository.DeliveryAgentRepo;
+
+public class DeliveryAgentService implements IDeliveryAgent {
+	@Autowired
+	DeliveryAgentRepo repo;
+
+	@Override
+	public List<DeliveryAgent> getAllDeliveryAgents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DeliveryAgent getDeliveryAgentById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAgentById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

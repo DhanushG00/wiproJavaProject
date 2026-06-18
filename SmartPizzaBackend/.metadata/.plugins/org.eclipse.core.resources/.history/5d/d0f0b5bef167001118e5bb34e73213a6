@@ -1,0 +1,56 @@
+package com.wipro.api_gateway;
+
+@Component
+public class JwtAuthenticationFilter implements GlobalFilter {
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        String path = exchange.getRequest().getURI().getPath();
+
+        // ✅ Allow auth APIs
+        if (path.contains("/auth")) {
+            return chain.filter(exchange);
+        }
+
+        List<String> authHeaders =
+                exchange.getRequest().getHeaders().get("Authorization");
+
+        if (authHeaders == null || authHeaders.isEmpty()) {
+            return unauthorized(exchange);
+        }
+
+        String token = authHeaders.get(0);
+
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        try {
+            if (!jwtUtil.validateToken(token)) {
+                return unauthorized(exchange);
+            }
+        } catch (Exception e) {
+            return unauthorized(exchange);
+        }
+
+        // ✅ Extract username
+        String username = jwtUtil.extractUsername(token);
+
+        // ✅ Pass user to downstream services
+        ServerHttpRequest request = exchange.getRequest()
+                .mutate()
+                .header("X-User", username)
+                .build();
+
+        return chain.filter(exchange.mutate().request(request).build());
+    }
+
+    private Mono<Void> unauthorized(ServerWebExchange exchange) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        return exchange.getResponse().setComplete();
+    }
+}

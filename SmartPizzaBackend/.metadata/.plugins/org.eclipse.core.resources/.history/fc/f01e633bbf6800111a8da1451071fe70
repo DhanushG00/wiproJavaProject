@@ -1,0 +1,50 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.repository.MenuRepository;
+
+@Service
+public class MenuServiceImpl implements MenuService {
+
+    @Autowired
+    private MenuRepository menuRepository;
+
+    @Override
+    public MenuEntity addMenu(MenuEntity menu) {
+        return menuRepository.save(menu);
+    }
+
+    @Override
+    public List<MenuEntity> getAllMenu() {
+        return menuRepository.findAll();
+    }
+
+    @Override
+    public MenuEntity getMenuById(Long id) {
+        return menuRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Menu not found"));
+    }
+
+    @Override
+    public MenuEntity updateMenu(Long id, MenuEntity menu) {
+        MenuEntity existing = getMenuById(id);
+
+        existing.setName(menu.getName());
+        existing.setDescription(menu.getDescription());
+        existing.setPrice(menu.getPrice());
+        existing.setCategory(menu.getCategory());
+        existing.setImageUrl(menu.getImageUrl());
+
+        return menuRepository.save(existing);
+    }
+
+    @Override
+    public void deleteMenu(Long id) {
+        menuRepository.deleteById(id);
+    }
+}

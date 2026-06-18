@@ -1,0 +1,3 @@
+com\wipro\api_gateway\JwtFilter.class
+com\wipro\api_gateway\JwtService.class
+com\wipro\api_gateway\ApiGatewayApplication.class

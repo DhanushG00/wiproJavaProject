@@ -1,0 +1,16 @@
+package com.wipro.order_service.dto;
+
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class OrderDTO {
+
+    private Long id;
+    private Long userId;
+    private double totalPrice;
+    private String status;
+
+    private List<OrderItemDTO> items;
+}

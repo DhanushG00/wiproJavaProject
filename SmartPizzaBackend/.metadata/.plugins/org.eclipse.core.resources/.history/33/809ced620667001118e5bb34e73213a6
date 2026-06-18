@@ -1,0 +1,5 @@
+package com.wipro.admin_service.service;
+
+public class AdminService {
+
+}

@@ -1,0 +1,21 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+import com.wipro.order_service.dto.MenuDTO;
+
+public interface MenuService {
+
+    public MenuDTO addMenu(MenuDTO dto);
+    public ResponseEntity<byte[]> getImage(Long id);
+
+    public List<MenuDTO> getAllMenu();
+
+    public MenuDTO getMenuById(Long id);
+
+    public MenuDTO updateMenu(Long id, MenuDTO dto);
+
+    public void deleteMenu(Long id);
+}

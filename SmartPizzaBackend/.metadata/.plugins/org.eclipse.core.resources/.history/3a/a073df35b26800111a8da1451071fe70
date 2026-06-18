@@ -1,0 +1,26 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.repository.MenuRepository;
+
+@Service
+public class MenuServiceImpl {
+
+    private final MenuRepository menuRepository;
+
+    public MenuServiceImpl(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
+
+    public MenuEntity addMenu(MenuEntity menu) {
+        return menuRepository.save(menu);
+    }
+
+    public List<MenuEntity> getAllMenu() {
+        return menuRepository.findAll();
+    }
+}

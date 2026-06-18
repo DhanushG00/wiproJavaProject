@@ -1,0 +1,49 @@
+package com.wipro.order_service.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.service.MenuService;
+
+@RestController
+@RequestMapping("/api/menu")
+public class MenuController {
+
+    @Autowired
+    private MenuService menuService;
+
+    //  CREATE
+    @PostMapping("/add")
+    public MenuEntity addMenu(@RequestBody MenuEntity menu) {
+        return menuService.addMenu(menu);
+    }
+
+    //  READ ALL
+    @GetMapping("/all")
+    public List<MenuEntity> getAllMenu() {
+        return menuService.getAllMenu();
+    }
+
+    //  READ BY ID
+    @GetMapping("/{id}")
+    public MenuEntity getMenuById(@PathVariable Long id) {
+        return menuService.getMenuById(id);
+    }
+
+    //  UPDATE
+    @PutMapping("/update/{id}")
+    public MenuEntity updateMenu(@PathVariable Long id,
+                                 @RequestBody MenuEntity menu) {
+        return menuService.updateMenu(id, menu);
+    }
+
+    //  DELETE
+    @DeleteMapping("/delete/{id}")
+    public String deleteMenu(@PathVariable Long id) {
+        menuService.deleteMenu(id);
+        return "Menu deleted successfully";
+    }
+}

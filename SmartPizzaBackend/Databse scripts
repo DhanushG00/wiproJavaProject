@@ -1,0 +1,107 @@
+
+				AUTH_SERVICE FIRST RUN:
+
+Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+[2m2026-06-12T15:25:16.601+05:30[0;39m [32m INFO[0;39m [35m19864[0;39m [2m--- [auth-service] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table role (id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB
+Hibernate: create table user (id bigint not null auto_increment, password varchar(255), username varchar(255), primary key (id)) engine=InnoDB
+Hibernate: create table user_roles (user_id bigint not null, roles_id bigint not null, primary key (user_id, roles_id)) engine=InnoDB
+Hibernate: alter table user_roles add constraint FKj9553ass9uctjrmh0gkqsmv0d foreign key (roles_id) references role (id)
+Hibernate: alter table user_roles add constraint FK55itppkw3i07do3h7qoclqd4k foreign key (user_id) references user (id)
+
+
+
+AFTER ADDING USER:
+
+[2m2026-06-12T15:42:39.485+05:30[0;39m [33m WARN[0;39m [35m19864[0;39m [2m--- [auth-service] [nio-8081-exec-3] [0;39m[36m.w.s.m.s.DefaultHandlerExceptionResolver[0;39m [2m:[0;39m Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('u' (code 117)): was expecting double-quote to start field name]
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.name=?
+Hibernate: insert into user (password,username) values (?,?)
+Hibernate: insert into user_roles (user_id,roles_id) values (?,?)
+
+
+
+AFTER TOKEN GENERATION:
+
+Hibernate: select u1_0.id,u1_0.password,u1_0.username from user u1_0 where u1_0.username=?
+Hibernate: select r1_0.user_id,r1_1.id,r1_1.name from user_roles r1_0 join role r1_1 on r1_1.id=r1_0.roles_id where r1_0.user_id=?
+
+
+
+
+
+
+
+
+					DELIVERY-SERVICE:
+INITIAL RUN:
+
+Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+[2m2026-06-13T00:39:02.555+05:30[0;39m [32m INFO[0;39m [35m19624[0;39m [2m--- [delivery-service] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table delivery (id bigint not null auto_increment, agent_id bigint, latitude float(53) not null, longitude float(53) not null, order_id bigint, status varchar(255), primary key (id)) engine=InnoDB
+Hibernate: create table delivery_agent (id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB
+
+
+
+
+					ORDER_SERVICE
+
+Database JDBC URL [jdbc:mysql://localhost:8080/order_service_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.9
+	Default catalog/schema: order_service_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+[2m2026-06-14T08:41:15.362+05:30[0;39m [32m INFO[0;39m [35m4788[0;39m [2m--- [order-service] [           main] [0;39m[36morg.hibernate.orm.core                  [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    create table cart (
+        id bigint not null auto_increment,
+        menuId bigint not null,
+        quantity integer not null,
+        userId bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table menu (
+        id bigint not null auto_increment,
+        category varchar(255) not null,
+        description varchar(255),
+        imageUrl varchar(255),
+        name varchar(255) not null,
+        price float(53) not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table order_items (
+        id bigint not null auto_increment,
+        orderId bigint,
+        pizzaId bigint,
+        quantity integer not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table orders (
+        id bigint not null auto_increment,
+        status varchar(255) not null,
+        totalPrice float(53) not null,
+        userId bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+

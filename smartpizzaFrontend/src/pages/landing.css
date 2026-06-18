@@ -1,0 +1,65 @@
+/* ✅ FULL SCREEN BACKGROUND */
+.landing {
+  height: 100vh;
+
+  background: linear-gradient(
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.6)
+  ),
+  url("C:\Users\DH20695571\Downloads\loginbg.jpg");
+
+  background-size: cover;
+  background-position: center;
+
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ✅ NAVBAR (GLASS EFFECT 🔥) */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+
+  backdrop-filter: blur(1px);
+}
+
+/* ✅ LOGO */
+.logo span {
+  font-weight: bold;
+  font-size: 24px;
+  color: #ffc66a;
+}
+
+.logo .pizza {
+  color: #dfaeae;
+}
+
+/* ✅ HERO SECTION */
+.hero {
+  text-align: center;
+  margin-top: 180px;
+}
+
+.hero h1 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* ✅ BUTTONS */
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons button {
+  margin: 10px;
+  padding: 12px 25px;
+  font-size: 16px;
+}

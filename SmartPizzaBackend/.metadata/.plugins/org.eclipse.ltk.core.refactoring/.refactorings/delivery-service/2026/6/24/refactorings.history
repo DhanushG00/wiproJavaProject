@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.wipro.delivery_service.service.DeliveryAgent&apos; to &apos;DeliveryAgentService&apos;&#x0D;&#x0A;- Original project: &apos;delivery-service&apos;&#x0D;&#x0A;- Original element: &apos;com.wipro.delivery_service.service.DeliveryAgent&apos;&#x0D;&#x0A;- Renamed element: &apos;com.wipro.delivery_service.service.DeliveryAgentService&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DeliveryAgent&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.wipro.delivery_service.service{DeliveryAgent.java[DeliveryAgent" matchStrategy="1" name="DeliveryAgentService" qualified="false" references="true" similarDeclarations="false" stamp="1781291932274" textual="false" version="1.0"/>
+</session>

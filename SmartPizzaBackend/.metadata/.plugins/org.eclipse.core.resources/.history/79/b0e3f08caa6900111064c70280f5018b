@@ -1,0 +1,71 @@
+package com.wipro.order_service.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.wipro.order_service.entity.*;
+import com.wipro.order_service.repository.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
+
+class CartServiceImplTest {
+
+    @Mock
+    private CartRepository cartRepository;
+
+    @Mock
+    private MenuRepository menuRepository;
+
+    @InjectMocks
+    private CartServiceImpl cartService;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testAddToCart_Success() {
+
+        MenuEntity menu = new MenuEntity();
+        menu.setId(1L);
+
+        when(menuRepository.findById(1L))
+                .thenReturn(Optional.of(menu));
+
+        Cart savedCart = new Cart();
+        savedCart.setId(1L);
+        savedCart.setUserId(1L);
+        savedCart.setMenu(menu);
+        savedCart.setQuantity(2);
+
+        when(cartRepository.save(any(Cart.class)))
+                .thenReturn(savedCart);
+
+        var result = cartService.addToCart(1L, 1L, 2);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getUserId());
+
+        verify(cartRepository, times(1)).save(any(Cart.class));
+    }
+
+    @Test
+    void testAddToCart_MenuNotFound() {
+
+        when(menuRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        Exception ex = assertThrows(RuntimeException.class, () -> {
+            cartService.addToCart(1L, 1L, 2);
+        });
+
+        assertEquals("Menu not found", ex.getMessage());
+    }
+}

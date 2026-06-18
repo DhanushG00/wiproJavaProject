@@ -1,0 +1,12 @@
+package com.wipro.order_service.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.razorpay.Payment;
+import com.wipro.order_service.entity.PaymentEntity;
+
+public interface PaymentRepo extends JpaRepository<Payment, Long> {
+
+	void save(PaymentEntity payment);
+
+}

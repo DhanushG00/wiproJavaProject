@@ -1,0 +1,32 @@
+{
+  "user": [
+    {
+      "username": "teja@gmail.com",
+      "password": "123456",
+      "roles": "CUSTOMER",
+      "id": "GSHHde1sCPA"
+    },
+    {
+      "username": "teja@gmail.com",
+      "password": "123456",
+      "id": "L7JJJGpmfWw"
+    },
+    {
+      "username": "teja@gmail.com",
+      "password": "123456",
+      "id": "WXJMbfUnaNY"
+    },
+    {
+      "username": "teja@gmail.com",
+      "password": "123456",
+      "id": "2q_33eHHv4o"
+    },
+    {
+      "username": "teja2@gmail.com",
+      "password": "Teja@121",
+      "roles": "ADMIN",
+      "id": "20YtfItGZjk"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

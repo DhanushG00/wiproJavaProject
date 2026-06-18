@@ -1,0 +1,57 @@
+package com.wipro.auth_service.service;
+
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@Service
+public class JwtService {
+
+    private String secret="smartpizza_secret_key_12345678901234567890";
+
+    //  Token validity: 1 hour
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60;
+
+    //  Generate JWT Token
+    public String generateToken(String username, String roles, int id) {
+
+        return Jwts.builder()
+                .setSubject(username)                  // username
+                .claim("roles", roles) 
+                .claim("userId", id)// roles (IMPORTANT)
+                .setIssuedAt(new Date())               // issued time
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .compact();
+    }
+
+    //  Extract all claims
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    //  Extract username
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    //  Extract role
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("roles", String.class);
+    }
+
+    //  Validate token (expiry)
+    public boolean validateToken(String token) {
+        return !extractAllClaims(token)
+                .getExpiration()
+                .before(new Date());
+    }
+}

@@ -1,0 +1,81 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.order_service.dto.CartDTO;
+import com.wipro.order_service.dto.MenuDTO;
+import com.wipro.order_service.entity.Cart;
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.repository.CartRepository;
+import com.wipro.order_service.repository.MenuRepository;
+
+@Service
+public class CartServiceImpl implements CartService {
+
+	@Autowired
+	private CartRepository cartRepository;
+
+	@Autowired
+	private MenuRepository menuRepository;
+
+	@Override
+	public CartDTO addToCart(Long userId, Long menuId, int quantity) {
+
+		MenuEntity menu = menuRepository.findById(menuId).orElseThrow(() -> new RuntimeException("Menu not found"));
+
+		Cart cart = new Cart();
+		cart.setUserId(userId);
+		cart.setMenu(menu);
+		cart.setQuantity(quantity);
+
+		return convertToDTO(cartRepository.save(cart));
+	}
+
+	@Override
+	public List<CartDTO> getCartByUser(Long userId) {
+		return cartRepository.findByUserId(userId).stream().map(this::convertToDTO).toList();
+	}
+
+	@Override
+	public CartDTO updateCart(Long cartId, int quantity) {
+
+		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+
+		cart.setQuantity(quantity);
+
+		return convertToDTO(cartRepository.save(cart));
+	}
+
+	@Override
+	public void deleteCartItem(Long cartId) {
+		cartRepository.deleteById(cartId);
+	}
+
+	@Override
+	public void clearCart(Long userId) {
+		cartRepository.deleteByUserId(userId);
+	}
+
+	// ✅ ENTITY → DTO
+	private CartDTO convertToDTO(Cart cart) {
+
+        CartDTO dto = new CartDTO();
+
+        dto.setId(cart.getId());
+        dto.setUserId(cart.getUserId());
+        dto.setQuantity(cart.getQuantity());
+
+        MenuDTO menuDTO = new MenuDTO();
+        menuDTO.setId(cart.getMenu().getId());
+        menuDTO.setName(cart.getMenu().getName());
+        menuDTO.setPrice(cart.getMenu().getPrice());
+        menuDTO.setCategory(cart.getMenu().getCategory());
+
+        dto.setMenu(menuDTO);
+
+        return dto;
+    }
+}``

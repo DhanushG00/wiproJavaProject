@@ -1,0 +1,5 @@
+package com.wipro.api_gateway;
+
+public class JwtFilter {
+
+}

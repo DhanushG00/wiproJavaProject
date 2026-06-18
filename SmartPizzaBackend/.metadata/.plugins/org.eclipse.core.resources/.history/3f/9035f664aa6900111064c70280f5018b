@@ -1,0 +1,76 @@
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.wipro.delivery_service.dto.AssignDeliveryRequest;
+import com.wipro.delivery_service.entity.Delivery;
+import com.wipro.delivery_service.entity.DeliveryAgent;
+import com.wipro.delivery_service.repository.DeliveryAgentRepo;
+import com.wipro.delivery_service.repository.DeliveryRepo;
+
+
+class DeliveryServiceTest {
+
+    @Mock
+    private DeliveryRepo deliveryRepo;
+
+    @Mock
+    private DeliveryAgentRepo agentRepo;
+
+    @InjectMocks
+    private DeliveryService deliveryService;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testAssignDelivery_AgentFound() {
+
+        AssignDeliveryRequest req = new AssignDeliveryRequest();
+        req.setOrderId(1L);
+        req.setAgentId(2L);
+
+        DeliveryAgent agent = new DeliveryAgent();
+        agent.setId(2L);
+
+        when(agentRepo.findById(2L))
+                .thenReturn(Optional.of(agent));
+
+        Delivery saved = new Delivery();
+        saved.setOrderId(1L);
+
+        when(deliveryRepo.save(any(Delivery.class)))
+                .thenReturn(saved);
+
+        Delivery result = deliveryService.assignDelivery(req);
+
+        assertNotNull(result);
+        verify(deliveryRepo).save(any());
+    }
+
+    @Test
+    void testAssignDelivery_AgentNotFound() {
+
+        AssignDeliveryRequest req = new AssignDeliveryRequest();
+        req.setAgentId(2L);
+
+        when(agentRepo.findById(2L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () ->
+                deliveryService.assignDelivery(req));
+    }
+}

@@ -1,0 +1,22 @@
+package com.wipro.auth_service.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.auth_service.dto.AuthRequest;
+import com.wipro.auth_service.entity.User;
+import com.wipro.auth_service.service.IUserInterface;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+	@Autowired
+	IUserInterface userInterface;
+	
+	public User addUser(@RequestBody AuthRequest user) {
+		return userInterface.addUser(user);
+	}
+
+}

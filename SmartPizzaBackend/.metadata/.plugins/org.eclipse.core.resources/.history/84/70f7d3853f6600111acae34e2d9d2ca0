@@ -1,0 +1,5 @@
+package com.wipro.auth_service.jwt_filter;
+
+public class JwtFilter {
+
+}

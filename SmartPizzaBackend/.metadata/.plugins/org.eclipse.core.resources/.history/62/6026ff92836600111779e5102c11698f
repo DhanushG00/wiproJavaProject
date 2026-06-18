@@ -1,0 +1,12 @@
+package com.wipro.auth_service.service;
+
+import java.util.List;
+
+import com.wipro.auth_service.entity.User;
+
+public interface IUserInterface {
+	
+	
+	public List<User> getAllUsers();
+
+}

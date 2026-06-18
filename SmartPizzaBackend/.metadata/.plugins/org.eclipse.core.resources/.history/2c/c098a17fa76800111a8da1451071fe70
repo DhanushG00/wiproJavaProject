@@ -1,0 +1,52 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.order_service.entity.Cart;
+import com.wipro.order_service.entity.OrderEntity;
+import com.wipro.order_service.pattern.OrderFactory;
+import com.wipro.order_service.repository.CartRepository;
+import com.wipro.order_service.repository.OrderRepository;
+
+@Service
+public class OrderServiceImpl {
+	@Autowired
+	private final CartRepository cartRepository = null;
+	@Autowired
+	private final OrderRepository orderRepository = null;
+	@Autowired
+	private final OrderFactory orderFactory = null;
+
+    //  place order
+    public OrderEntity placeOrder(Long userId) {
+
+        //  get all cart items for user
+        List<Cart> cartItems = cartRepository.findByUserId(userId);
+
+        if (cartItems.isEmpty()) {
+            throw new RuntimeException("Cart is empty");
+        }
+
+        //  Factory Pattern used here
+        OrderEntity order = orderFactory.createOrder(cartItems, userId);
+
+        //  save order
+        OrderEntity savedOrder = orderRepository.save(order);
+
+        //  clear cart
+        cartRepository.deleteByUserId(userId);
+
+        return savedOrder;
+    }
+
+    public List<OrderEntity> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public List<OrderEntity> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+}

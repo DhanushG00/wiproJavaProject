@@ -1,0 +1,11 @@
+package com.wipro.admin_service.dto;
+
+import lombok.Data;
+
+@Data
+public class DeliveryDTO {
+
+    private Long orderId;
+    private Long agentId;
+    private String status;
+}

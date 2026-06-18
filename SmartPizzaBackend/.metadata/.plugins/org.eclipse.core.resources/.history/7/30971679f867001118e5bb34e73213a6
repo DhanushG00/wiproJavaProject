@@ -1,0 +1,33 @@
+package com.wipro.api_gateway;
+
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class JwtService {
+
+    private final String SECRET = "smartpizza_secret_key_12345678901234567890";
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
+    public boolean validateToken(String token) {
+        return !extractAllClaims(token)
+                .getExpiration()
+                .before(new Date());
+    }
+}

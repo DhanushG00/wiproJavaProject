@@ -1,0 +1,12 @@
+package com.wipro.delivery_service.service;
+
+import java.util.List;
+
+import com.wipro.delivery_service.entity.DeliveryAgent;
+
+public interface IDeliveryAgent {
+	public List<DeliveryAgent> getAllDeliveryAgents();
+	public DeliveryAgent getDeliveryAgentById(Long id);
+	public void deleteAgentById(Long id);
+
+}

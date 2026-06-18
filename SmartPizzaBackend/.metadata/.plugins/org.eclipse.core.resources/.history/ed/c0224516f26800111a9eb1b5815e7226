@@ -1,0 +1,10 @@
+package com.wipro.admin_service.dto;
+
+import lombok.Data;
+
+@Data
+public class OrderItemDTO {
+
+    private Long pizzaId;
+    private int quantity;
+}

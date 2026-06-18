@@ -1,0 +1,106 @@
+package com.wipro.delivery_service.service;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.wipro.delivery_service.dto.AssignDeliveryRequest;
+import com.wipro.delivery_service.dto.OrderDTO;
+import com.wipro.delivery_service.dto.UpdateLocationRequest;
+import com.wipro.delivery_service.entity.Delivery;
+import com.wipro.delivery_service.entity.DeliveryAgent;
+import com.wipro.delivery_service.exception.AgentNotFoundException;
+import com.wipro.delivery_service.exception.DeliveryNotFoundException;
+import com.wipro.delivery_service.repository.DeliveryAgentRepo;
+import com.wipro.delivery_service.repository.DeliveryRepo;
+
+@Service
+public class DeliveryService {
+
+    @Autowired
+    private DeliveryRepo deliveryRepo;
+    private static final Logger logger =
+            LoggerFactory.getLogger(DeliveryService.class);
+
+    @Autowired
+    private DeliveryAgentRepo agentRepo;
+    @Autowired
+	RestTemplate restTemplate = new RestTemplate();
+
+
+    public Delivery assignDelivery(AssignDeliveryRequest req) {
+    	
+
+    	OrderDTO[] order = restTemplate.getForObject(
+    	    "lb://order-service/api/order/user/" + req.getOrderId(),OrderDTO[].class);
+
+    	if(order == null) {
+    	    throw new RuntimeException("Invalid order ID");
+    	}
+    	
+        DeliveryAgent agent = agentRepo.findById(req.getAgentId())
+                .orElseThrow(() ->
+                        new AgentNotFoundException("Agent not found: " + req.getAgentId())
+                );
+
+        logger.info("Assigning delivery for order {}", req.getOrderId());
+		Delivery delivery = new Delivery();
+    try {
+        delivery.setOrderId(order.getId());
+        delivery.setAgentId(agent.getId());
+        delivery.setLatitude(0.0);
+        delivery.setLongitude(0.0);
+        delivery.setStatus("ASSIGNED");
+        logger.info("Delivery assigned successfully");
+
+    } catch (Exception e) {
+        logger.error("Error assigning delivery", e);
+        throw e;
+    }
+
+        return deliveryRepo.save(delivery);
+    }
+
+
+    public Delivery updateLocation(UpdateLocationRequest req) {
+
+        Delivery delivery = deliveryRepo.findByOrderId(req.getOrderId())
+                .orElseThrow(() ->
+                        new DeliveryNotFoundException("Delivery not found for order: " + req.getOrderId())
+                );
+
+        delivery.setLatitude(req.getLatitude());
+        delivery.setLongitude(req.getLongitude());
+
+        delivery.setStatus("ON_THE_WAY");
+
+        return deliveryRepo.save(delivery);
+    }
+
+    // Get delivery by orderId (frontend uses this)
+    public Delivery getDelivery(Long orderId) {
+        return deliveryRepo.findByOrderId(orderId)
+                .orElseThrow(() ->
+                        new DeliveryNotFoundException("Delivery not found"));
+    }
+
+    // Get all deliveries (for admin service)
+    public List<Delivery> getAllDeliveries() {
+        return deliveryRepo.findAll();
+    }
+
+    // Mark delivered
+    public Delivery markDelivered(Long orderId) {
+        Delivery delivery = deliveryRepo.findByOrderId(orderId)
+                .orElseThrow(() ->
+                        new DeliveryNotFoundException("Delivery not found"));
+
+        delivery.setStatus("DELIVERED");
+
+        return deliveryRepo.save(delivery);
+    }
+}

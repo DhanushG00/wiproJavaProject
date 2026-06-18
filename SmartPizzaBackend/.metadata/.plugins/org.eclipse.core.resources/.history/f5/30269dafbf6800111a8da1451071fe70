@@ -1,0 +1,18 @@
+package com.wipro.order_service.service;
+
+
+
+import java.util.List;
+
+import com.wipro.order_service.entity.Cart;
+
+public interface CartService {
+
+    Cart addToCart(Long userId, Long menuId, int quantity);
+
+    List<Cart> getCartByUser(Long userId);
+
+    void deleteCartItem(Long id);
+
+   // void clearCart(Long userId);
+}

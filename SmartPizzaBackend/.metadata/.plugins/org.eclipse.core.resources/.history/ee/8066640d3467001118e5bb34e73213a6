@@ -1,0 +1,43 @@
+package com.wipro.admin_service.controller;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.admin_service.dto.RevenueAnalyticsDTO;
+import com.wipro.admin_service.service.AdminService;
+
+@RestController
+@RequestMapping("/admin")
+public class AdminController {
+
+    @Autowired
+    private AdminService service;
+
+    // Revenue analytics
+    @GetMapping("/top-pizzas")
+    public Map<Long, Integer> getTopPizzas() {
+        return service.getTopSellingPizzas();
+    }
+    
+    //Calculating total
+    @GetMapping("/revenue-analytics")
+    public RevenueAnalyticsDTO getRevenueAnalytics() {
+        return service.getRevenueAnalytics();
+    }
+
+    // Delivery performance
+    @GetMapping("/delivery-performance")
+    public Map<Long, Integer> getDeliveryPerformance() {
+        return service.getDeliveryPerformance();
+    }
+
+    // Customer trends
+    @GetMapping("/customer-trends")
+    public Map<String, Integer> getTrends() {
+        return service.getCustomerTrends();
+    }
+}

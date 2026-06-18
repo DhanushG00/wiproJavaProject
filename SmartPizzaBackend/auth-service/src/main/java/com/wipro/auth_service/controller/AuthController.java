@@ -1,0 +1,63 @@
+package com.wipro.auth_service.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.auth_service.dto.AuthRequest;
+import com.wipro.auth_service.dto.AuthResponse;
+import com.wipro.auth_service.entity.User;
+import com.wipro.auth_service.repository.UserRepo;
+import com.wipro.auth_service.service.AuthService;
+import com.wipro.auth_service.service.JwtService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    @Autowired
+    private AuthService service;
+    @Autowired
+    UserRepo userRepo;
+
+    @Autowired
+    private AuthenticationManager authManager;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @PostMapping("/register")
+    public String register(@Valid @RequestBody AuthRequest request) {
+        service.registerUser(request.getUsername(), request.getPassword(),request.getRoles());
+        return "User registered with Role "+request.getRoles();
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody AuthRequest request) {
+
+        authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getUsername(),
+                request.getPassword()
+            )
+        );
+
+        User user = userRepo.findByUsernameIgnoreCase(request.getUsername())
+                .orElseThrow();
+
+        // PASS ROLE
+        String token = jwtService.generateToken(
+                user.getUsername(),
+                user.getRoles(),
+                user.getId()
+        );
+
+        return new AuthResponse(token);
+    }
+}

@@ -1,0 +1,46 @@
+.custom-nav {
+  background: rgb(151, 57, 11);
+  color: rgb(213, 243, 47);
+}
+
+/* ✅ LOGO */
+.logo {
+  cursor: pointer;
+}
+
+.logo .smart {
+  color: #efd023;
+}
+
+.logo .pizza {
+  color: rgba(12, 5, 5, 0.372);
+}
+
+/* ✅ ROLE */
+.role {
+  text-transform: uppercase;
+}
+
+/* ✅ PROFILE */
+.profile-icon {
+  cursor: pointer;
+}
+
+/* ✅ CART */
+.cart-box {
+  position: relative;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/* ✅ CART COUNT */
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 50%;
+}

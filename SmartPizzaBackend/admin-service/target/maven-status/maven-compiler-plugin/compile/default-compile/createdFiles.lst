@@ -1,0 +1,10 @@
+com\wipro\admin_service\dto\RevenueAnalyticsDTO.class
+com\wipro\admin_service\exception\GlobalExceptionHandler.class
+com\wipro\admin_service\service\AdminService.class
+com\wipro\admin_service\controller\AdminController.class
+com\wipro\admin_service\dto\UsersDTO.class
+com\wipro\admin_service\dto\DeliveryDTO.class
+com\wipro\admin_service\dto\OrderItemDTO.class
+com\wipro\admin_service\dto\OrderResponse.class
+com\wipro\admin_service\AdminServiceApplication.class
+com\wipro\admin_service\exception\ExternalServiceException.class

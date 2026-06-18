@@ -1,0 +1,32 @@
+package com.wipro.order_service.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.order_service.dto.OrderResponseDTO;
+import com.wipro.order_service.entity.OrderEntity;
+import com.wipro.order_service.service.OrderService;
+
+@RestController
+@RequestMapping("/api/order")
+public class OrderController {
+	@Autowired
+    private OrderService orderService;
+
+
+    @PostMapping("/place/{userId}")
+    public OrderResponseDTO placeOrder(@PathVariable Long userId) {
+        return orderService.placeOrder(null)
+    }
+
+    @GetMapping("/all")
+    public List<OrderResponseDTO> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+}

@@ -1,0 +1,49 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.order_service.entity.Cart;
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.repository.CartRepository;
+import com.wipro.order_service.repository.MenuRepository;
+
+@Service
+public class CartServiceImpl implements CartService {
+	@Autowired
+    private CartRepository cartRepository;
+	@Autowired
+    private MenuRepository menuRepository;
+
+
+    // Add item to cart
+    public Cart addToCart(Long userId, Long menuId, int quantity) {
+
+        // get menu object
+        MenuEntity menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new RuntimeException("Menu not found"));
+
+        // create cart entry (simple design: one row per item)
+        Cart cart = new Cart();
+        cart.setUserId(userId);
+        cart.setMenu(menu);
+        cart.setQuantity(quantity);
+
+        return cartRepository.save(cart);
+    }
+
+    //  get user cart
+    public List<Cart> getCartByUser(Long userId) {
+        return cartRepository.findByUserId(userId);
+    }
+
+    //  clear cart
+    public void  deleteCartItem(Long userId) {
+        cartRepository.deleteByUserId(userId);
+    }
+
+
+
+}

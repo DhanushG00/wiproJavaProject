@@ -1,0 +1,42 @@
+package com.wipro.order_service.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.wipro.order_service.entity.Cart;
+import com.wipro.order_service.service.CartService;
+
+@RestController
+@RequestMapping("/api/cart")
+public class CartController {
+
+    private final CartService cartService;
+
+    // Constructor Injection
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    // Add item to cart
+    @PostMapping("/add")
+    public Cart addToCart(@RequestParam Long userId,
+                          @RequestParam Long menuId,
+                          @RequestParam int quantity) {
+
+        return cartService.addToCart(userId, menuId, quantity);
+    }
+
+    //  Get cart by user
+    @GetMapping("/{userId}")
+    public List<Cart> getCart(@PathVariable Long userId) {
+        return cartService.getCartByUser(userId);
+    }
+
+    //  Clear cart
+    @DeleteMapping("/clear/{userId}")
+    public String clearCart(@PathVariable Long userId) {
+        cartService.deleteCartItem(userId);
+        return "Cart cleared successfully";
+    }
+}

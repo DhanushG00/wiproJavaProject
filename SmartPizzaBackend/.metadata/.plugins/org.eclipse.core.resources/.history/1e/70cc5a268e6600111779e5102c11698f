@@ -1,0 +1,5 @@
+package com.wipro.delivery_service.repository;
+
+public class DeliveryRepo {
+
+}

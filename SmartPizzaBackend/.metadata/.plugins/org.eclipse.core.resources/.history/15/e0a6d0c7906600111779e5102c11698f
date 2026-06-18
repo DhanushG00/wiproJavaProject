@@ -1,0 +1,57 @@
+package com.wipro.delivery_service.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.delivery_service.dto.AssignDeliveryRequest;
+import com.wipro.delivery_service.dto.UpdateLocationRequest;
+import com.wipro.delivery_service.entity.Delivery;
+import com.wipro.delivery_service.service.DeliveryService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/delivery")
+public class DeliveryController {
+
+    @Autowired
+    private DeliveryService service;
+
+
+    // ✅ Assign delivery
+    @PostMapping("/assign")
+    public Delivery assign(@Valid @RequestBody AssignDeliveryRequest req) {
+        return service.assignDelivery(req);
+    }
+
+    // ✅ Update location (used by delivery app)
+    @PostMapping("/update-location")
+    public Delivery updateLocation(@Valid @RequestBody UpdateLocationRequest req) {
+        return service.updateLocation(req);
+    }
+
+    // ✅ Get current location (USED BY REACT MAP)
+    @GetMapping("/{orderId}")
+    public Delivery getDelivery(@PathVariable Long orderId) {
+        return service.getDelivery(orderId);
+    }
+
+    // ✅ Admin use
+    @GetMapping("/all")
+    public List<Delivery> getAll() {
+        return service.getAllDeliveries();
+    }
+
+    // ✅ Mark delivered
+    @PostMapping("/delivered/{orderId}")
+    public Delivery markDelivered(@PathVariable Long orderId) {
+        return service.markDelivered(orderId);
+    }
+}

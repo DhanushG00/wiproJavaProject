@@ -1,0 +1,70 @@
+/* ✅ BACKGROUND */
+.login-container {
+  height: 100vh;
+
+  background: linear-gradient(
+      rgba(0,0,0,0.6),
+      rgba(0,0,0,0.6)
+    ),
+    url("../../public/images/loginbg.jpg");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ GLASS CARD */
+.login-card {
+  width: 350px;
+  padding: 30px;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  color: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+/* ✅ LOGO COLORS */
+.logo1 {
+  color: rgb(221, 90, 9);
+}
+.logo2 {
+  color: rgb(202, 95, 7);
+}
+
+/* ✅ INPUTS */
+.login-card input {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+}
+
+.login-card input::placeholder {
+  color: #ddd;
+}
+
+/* ✅ BUTTON */
+.login-card button {
+  font-weight: bold;
+}
+
+/* ✅ ERROR */
+.error {
+  color: #ff4d4d;
+  text-align: center;
+}
+
+/* ✅ LINK */
+.link {
+  cursor: pointer;
+  color: #2de752;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

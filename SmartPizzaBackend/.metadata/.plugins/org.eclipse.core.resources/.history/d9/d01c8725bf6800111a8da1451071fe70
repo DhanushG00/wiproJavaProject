@@ -1,0 +1,17 @@
+package com.wipro.order_service.service;
+
+import java.util.List;
+import com.wipro.order_service.entity.MenuEntity;
+
+public interface MenuService {
+
+    MenuEntity addMenu(MenuEntity menu);
+
+    List<MenuEntity> getAllMenu();
+
+    MenuEntity getMenuById(Long id);
+
+    MenuEntity updateMenu(Long id, MenuEntity menu);
+
+    void deleteMenu(Long id);
+}

@@ -1,0 +1,19 @@
+package com.wipro.admin_service.dto;
+
+import java.util.List;
+
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
+public class OrderResponse {
+
+    private Long id;
+    @NotNull(message="user id required")
+    private Long userId;
+    private double totalPrice;
+    private String status;
+
+    private List<OrderItemDTO> items;
+}

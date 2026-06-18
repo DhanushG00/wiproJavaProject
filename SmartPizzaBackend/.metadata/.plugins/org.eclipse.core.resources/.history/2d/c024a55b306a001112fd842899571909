@@ -1,0 +1,65 @@
+package com.wipro.order_service.controller;
+
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.order_service.dto.MenuDTO;
+import com.wipro.order_service.entity.MenuEntity;
+import com.wipro.order_service.service.MenuService;
+
+@RestController
+@RequestMapping("/api/menu")
+public class MenuController {
+
+	@Autowired
+	private MenuService menuService;
+
+	@PostMapping("/add")
+	public MenuDTO addMenu(@RequestBody MenuDTO dto) {
+		return menuService.addMenu(dto);
+	}
+
+	@GetMapping("/all")
+	public List<MenuDTO> getAllMenu() {
+		return menuService.getAllMenu();
+	}
+
+	@GetMapping("/{id}")
+	public MenuDTO getMenuById(@PathVariable Long id) {
+		return menuService.getMenuById(id);
+	}
+	
+	@GetMapping("/image/{id}")
+	public ResponseEntity<Resource> getImage(@PathVariable Long id) {
+
+	    return menuService.getImage(id);
+	}
+
+
+
+	@PutMapping("/update/{id}")
+	public MenuDTO updateMenu(@PathVariable Long id, @RequestBody MenuDTO dto) {
+		return menuService.updateMenu(id, dto);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public String deleteMenu(@PathVariable Long id) {
+		menuService.deleteMenu(id);
+		return "Menu deleted";
+	}
+}

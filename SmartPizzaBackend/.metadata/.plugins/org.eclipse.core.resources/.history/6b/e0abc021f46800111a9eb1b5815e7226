@@ -1,0 +1,18 @@
+package com.wipro.admin_service.dto;
+
+import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RevenueAnalyticsDTO {
+
+    private double totalRevenue;
+
+    // key = menuId, value = quantity sold
+    private Map<Long, Integer> pizzaCount;
+}

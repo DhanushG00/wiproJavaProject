@@ -1,0 +1,167 @@
+package com.wipro.admin_service.service;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.wipro.admin_service.dto.DeliveryDTO;
+import com.wipro.admin_service.dto.OrderItemDTO;
+import com.wipro.admin_service.dto.OrderResponse;
+import com.wipro.admin_service.dto.RevenueAnalyticsDTO;
+import com.wipro.admin_service.dto.UsersDTO;
+import com.wipro.admin_service.exception.ExternalServiceException;
+
+@Service
+public class AdminService {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private final String USERS_URL = "lb://auth-service/users/get";
+    private final String ORDER_URL = "lb://order-service/api/order/all";
+    private final String DELIVERY_URL = "lb://delivery-service/delivery/all";
+
+    // Fetch Orders
+    public List<OrderResponse> getOrders() {
+        try {
+            OrderResponse[] orders =
+                    restTemplate.getForObject(ORDER_URL, OrderResponse[].class);
+
+            return Arrays.asList(orders);
+
+        } catch (Exception e) {
+            throw new ExternalServiceException("Order service not available");
+        }
+    }
+
+    // Fetch Users
+    public List<UsersDTO> getAllUsers() {
+        try {
+            UsersDTO[] users =
+                    restTemplate.getForObject(USERS_URL, UsersDTO[].class);
+
+            return Arrays.asList(users);
+
+        } catch (Exception e) {
+            throw new ExternalServiceException("Auth service not available");
+        }
+    }
+
+    // Fetch Deliveries
+    public List<DeliveryDTO> getDeliveries() {
+        try {
+            DeliveryDTO[] deliveries =
+                    restTemplate.getForObject(DELIVERY_URL, DeliveryDTO[].class);
+
+            return Arrays.asList(deliveries);
+
+        } catch (Exception e) {
+            throw new ExternalServiceException("Delivery service not available");
+        }
+    }
+
+    // Revenue Analytics 
+    public RevenueAnalyticsDTO getRevenueAnalytics() {
+
+        List<OrderResponse> orders = getOrders();
+
+        double totalRevenue = 0;
+        Map<String, Integer> pizzaName = new HashMap<>();
+
+        for (OrderResponse order : orders) {
+
+            totalRevenue += order.getTotalPrice(); 
+
+            for (OrderItemDTO item : order.getItems()) {
+
+                String name = item.getMenu().getName(); 
+
+                pizzaName.put(
+                        name,
+                        pizzaName.getOrDefault(name, 0) + item.getQuantity()
+                );
+            }
+        }
+
+        return new RevenueAnalyticsDTO(totalRevenue, pizzaName);
+    }
+
+    // Total Revenue
+    public double getTotalRevenue() {
+
+        return getOrders()
+                .stream()
+                .mapToDouble(OrderResponse::getTotalPrice) // ✅ FIXED
+                .sum();
+    }
+
+    // Top Selling Pizza
+    public Map<String, Integer> getTopSellingPizzas() {
+
+        List<OrderResponse> orders = getOrders();
+
+        Map<String, Integer> pizzaName = new HashMap<>();
+
+        for (OrderResponse order : orders) {
+            for (OrderItemDTO item : order.getItems()) {
+
+                String name = item.getMenu().getName();
+
+                pizzaName.put(
+                        name,
+                        pizzaName.getOrDefault(name, 0) + item.getQuantity()
+                );
+            }
+        }
+
+        return pizzaName;
+    }
+
+    // Delivery Performance
+    public Map<Long, Integer> getDeliveryPerformance() {
+
+        List<DeliveryDTO> deliveries = getDeliveries();
+
+        Map<Long, Integer> stats = new HashMap<>();
+
+        for (DeliveryDTO d : deliveries) {
+
+            if ("DELIVERED".equals(d.getStatus())) {
+
+                stats.put(
+                        d.getAgentId(),
+                        stats.getOrDefault(d.getAgentId(), 0) + 1
+                );
+            }
+        }
+
+        return stats;
+    }
+
+    // Customer Trends (Combo)
+    public Map<String, Integer> getCustomerTrends() {
+
+        List<OrderResponse> orders = getOrders();
+
+        Map<String, Integer> combos = new HashMap<>();
+
+        for (OrderResponse order : orders) {
+
+            List<Long> ids = order.getItems().stream()
+                    .map(item -> item.getMenu().getId()) 
+                    .sorted()
+                    .toList();
+
+            String key = ids.toString();
+
+            combos.put(key, combos.getOrDefault(key, 0) + 1);
+        }
+
+        return combos;
+    }
+}

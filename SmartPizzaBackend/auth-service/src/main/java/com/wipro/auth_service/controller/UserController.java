@@ -1,0 +1,45 @@
+package com.wipro.auth_service.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.auth_service.dto.AuthRequest;
+import com.wipro.auth_service.entity.User;
+import com.wipro.auth_service.service.IUserInterface;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+	@Autowired
+	IUserInterface userInterface;
+	@PostMapping("/add")
+	public User addUser(@RequestBody @Valid AuthRequest user) {
+		return userInterface.addUser(user);
+	}
+	
+	@GetMapping("/get")
+	//@PreAuthorize("hasAuthority('CUSTOMER')")
+	public List<AuthRequest> getAllUsers(){
+		return userInterface.getAllUsers();
+	}
+	
+	@GetMapping("/getbyid/{id}")
+	public User findUserById(@PathVariable Long id) {
+		return userInterface.findUserById(id);
+	}
+	@DeleteMapping("/delete/{id}")
+	public void deleteUserById(@PathVariable Long id) {
+		userInterface.deleteUsersById(id);
+	}
+
+}
