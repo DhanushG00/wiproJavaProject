@@ -43,7 +43,7 @@ const LandingPage = () => {
         transition={{ duration: 1 }}
       >
 
-        <h1>Delicious Food Delivered</h1>
+        <h1>Life's Better with Pizza, Order Now!</h1>
 
         <p>Order your favorite pizza anytime, anywhere 🍕</p>
 

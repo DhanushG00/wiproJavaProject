@@ -31,7 +31,7 @@ public class AdminController {
         return service.getRevenueAnalytics();
     }
 
-    // Delivery performance
+ // Delivery performance
     @GetMapping("/delivery-performance")
     public Map<Long, Integer> getDeliveryPerformance() {
         return service.getDeliveryPerformance();

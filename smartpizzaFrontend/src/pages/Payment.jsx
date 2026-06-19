@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { clearCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "../utils/auth";
+import "../styles/Payment.css";
 
 const Payment = () => {
 
@@ -53,16 +54,16 @@ const Payment = () => {
     <>
       <Navbar />
 
-      <div className="container mt-4">
+      <div className="Payment-page">
 
-        <h3>💳 Payment</h3>
+        <h3 className="payment-title">💳 Payment </h3>
 
-        <div className="card p-4 shadow">
+        <div className="payment-card">
 
           <p><b>Total Amount:</b> ₹ {orderData.total}</p>
 
           <button
-            className="btn btn-danger w-100"
+            className="pay-btn"
             onClick={handlePayment}
           >
             Pay Now

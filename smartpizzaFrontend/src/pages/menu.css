@@ -1,28 +1,108 @@
-/* ✅ CARD */
+/* ✅ CARD (Modern Elevation + Soft Shadow) */
+
 .pizza-card {
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
-  background: white;
-  transition: 0.3s;
+
+  background: rgba(255, 255, 255, 0.08);   /* glass layer */
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  transition: all 0.35s ease;
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.4),
+    0 0 15px rgba(255,120,0,0.2);
 }
 
+
+/* ✅ CARD HOVER (Lift + Glow) */
+
 .pizza-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px) scale(1.02);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.5),
+    0 0 25px rgba(255,120,0,0.5);
 }
+
 
 /* ✅ IMAGE */
 .pizza-card img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
+
+  transition: transform 0.4s ease;
 }
 
-/* ✅ TEXT */
-.rating {
-  color: orange;
+/* ✅ IMAGE ZOOM EFFECT */
+.pizza-card:hover img {
+  transform: scale(1.08);
 }
 
-.price {
-  font-weight: bold;
+/* ✅ CONTENT CONTAINER */
+.card-body {
+  padding: 15px;
+}
+
+/* ✅ TITLE */
+.card-title {
   font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* ✅ DESCRIPTION */
+.card-desc {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* ✅ RATING (Badge Style) */
+.rating {
+  display: inline-block;
+  background: #43a047;
+  color: white;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ✅ PRICE */
+.price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #f0ddcf;
+}
+
+/* ✅ FOOTER (Price + Button Layout) */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+/* ✅ ADD BUTTON */
+.add-btn {
+  background: linear-gradient(135deg, #ff6a00, #ff8c42);
+  border: none;
+  color: white;
+
+  padding: 6px 14px;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+}
+
+.add-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255,120,0,0.5);
 }

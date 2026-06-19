@@ -1,11 +1,11 @@
-/* ✅ BACKGROUND */
+/* ✅ BACKGROUND (Premium Dark Overlay + Image Depth) */
 .login-container {
   height: 100vh;
 
-  background: linear-gradient(
-      rgba(0,0,0,0.6),
-      rgba(0,0,0,0.6)
-    ),
+  background:
+    radial-gradient(circle at top left, rgba(255, 140, 0, 0.4), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(255, 80, 0, 0.4), transparent 40%),
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
     url("../../public/images/loginbg.jpg");
 
   background-size: cover;
@@ -16,55 +16,111 @@
   align-items: center;
 }
 
-/* ✅ GLASS CARD */
+/* ✅ GLASS CARD (Ultra Modern with Glow) */
 .login-card {
-  width: 350px;
-  padding: 30px;
-  border-radius: 12px;
+  width: 360px;
+  padding: 35px;
+  border-radius: 20px;
 
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.2);
 
   color: white;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.5),
+    0 0 20px rgba(255, 120, 0, 0.3);
+
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* ✅ LOGO COLORS */
+/* ✅ ENTRY ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ✅ LOGO (Better Branding) */
 .logo1 {
-  color: rgb(221, 90, 9);
-}
-.logo2 {
-  color: rgb(202, 95, 7);
+  color: #f7a605;
+  font-weight: 700;
 }
 
-/* ✅ INPUTS */
+.logo2 {
+  color: #ff9d00;
+  font-weight: 700;
+}
+
+/* ✅ INPUT FIELDS (Modern Inputs) */
 .login-card input {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid transparent;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+/* ✅ INPUT FOCUS EFFECT */
+.login-card input:focus {
+  outline: none;
+  border: 1px solid #ff8c42;
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 10px rgba(255,140,0,0.4);
+}
+
+/* ✅ PLACEHOLDER */
+.login-card input::placeholder {
+  color: #ccc;
+}
+
+/* ✅ BUTTON (Premium CTA Style) */
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, #ff6a00, #ff8c42);
   border: none;
   color: white;
-}
 
-.login-card input::placeholder {
-  color: #ddd;
-}
-
-/* ✅ BUTTON */
-.login-card button {
   font-weight: bold;
+  letter-spacing: 0.5px;
+
+  transition: all 0.3s ease;
+}
+
+/* ✅ BUTTON HOVER */
+.login-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 120, 0, 0.6);
 }
 
 /* ✅ ERROR */
 .error {
   color: #ff4d4d;
   text-align: center;
+  font-size: 14px;
 }
 
 /* ✅ LINK */
 .link {
   cursor: pointer;
-  color: #2de752;
+  color: #ffd54f;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
 .link:hover {
+  color: #ffffff;
   text-decoration: underline;
 }

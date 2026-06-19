@@ -1,65 +1,118 @@
-/* ✅ FULL SCREEN BACKGROUND */
+/* ✅ FULL SCREEN BACKGROUND (Depth + Glow Effect) */
 .landing {
   height: 100vh;
 
-  background: linear-gradient(
-    rgba(0,0,0,0.6),
-    rgba(0,0,0,0.6)
-  ),
-  url("C:\Users\DH20695571\Downloads\loginbg.jpg");
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 120, 0, 0.4), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 70, 0, 0.3), transparent 40%),
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)),
+    url("C:\Users\DH20695571\Downloads\loginbg.jpg"); /* ✅ FIX PATH (important) */
 
   background-size: cover;
   background-position: center;
 
   color: white;
   font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
 }
 
-/* ✅ NAVBAR (GLASS EFFECT 🔥) */
+/* ✅ NAVBAR (Glass + Floating Effect) */
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
+  padding: 18px 40px;
 
-  backdrop-filter: blur(1px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 /* ✅ LOGO */
 .logo span {
-  font-weight: bold;
-  font-size: 24px;
-  color: #ffc66a;
+  font-weight: 700;
+  font-size: 26px;
+  color: #e38305;
+  margin-left: 5px;
 }
 
 .logo .pizza {
-  color: #dfaeae;
+  color: #ff0000;
+  margin-left: 5px;
 }
 
 /* ✅ HERO SECTION */
 .hero {
   text-align: center;
-  margin-top: 180px;
+  margin-top: 150px;
+  animation: fadeUp 0.8s ease-in-out;
 }
 
+/* ✅ HERO HEADING (Gradient Text) */
 .hero h1 {
-  font-size: 60px;
-  font-weight: bold;
+  font-size: 64px;
+  font-weight: 800;
+
+  background: linear-gradient(90deg, #ffcc70, #ff6a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* ✅ HERO SUBTEXT */
 .hero p {
   font-size: 20px;
-  margin-top: 10px;
-  opacity: 0.9;
+  margin-top: 15px;
+  opacity: 0.85;
 }
 
-/* ✅ BUTTONS */
+/* ✅ BUTTONS CONTAINER */
 .hero-buttons {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
+/* ✅ PRIMARY BUTTON */
 .hero-buttons button {
   margin: 10px;
-  padding: 12px 25px;
+  padding: 14px 28px;
   font-size: 16px;
+
+  border-radius: 8px;
+  border: none;
+
+  background: linear-gradient(135deg, #ff6a00, #ff8c42);
+  color: white;
+
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  transition: all 0.3s ease;
+}
+
+/* ✅ BUTTON HOVER */
+.hero-buttons button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(255, 120, 0, 0.6);
+}
+
+/* ✅ SECONDARY BUTTON (Optional) */
+.hero-buttons button:nth-child(2) {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.hero-buttons button:nth-child(2):hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* ✅ ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

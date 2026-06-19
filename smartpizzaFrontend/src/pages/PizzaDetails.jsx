@@ -53,9 +53,9 @@ const PizzaDetails = () => {
     <>
       <Navbar />
 
-      <div className="container mt-4">
+      <div className="details-pag">
 
-        <div className="row details-card shadow">
+        <div className="details-card">
 
           {/* ✅ IMAGE */}
           <div className="col-md-6">
@@ -95,7 +95,7 @@ const PizzaDetails = () => {
 
             {/* ✅ ADD BUTTON */}
             <button
-              className="btn btn-warning mt-4 w-100"
+              className="add-btn mt-4 w-100"
               onClick={handleAdd}
             >
               Add {qty} to Cart 🛒

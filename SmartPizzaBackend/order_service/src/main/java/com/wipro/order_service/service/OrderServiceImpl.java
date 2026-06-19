@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
         OrderEntity savedOrder = orderRepository.save(order);
 
-        cartRepository.deleteByUserId(userId);
+        //cartRepository.deleteByUserId(userId);
 
         //  Convert to DTO
         return convertToDTO(savedOrder);

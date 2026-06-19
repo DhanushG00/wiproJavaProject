@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../styles/Register.css";
 
 const Register = () => {
 
@@ -39,8 +40,8 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card p-4 col-md-4 mx-auto shadow">
+    <div className="register-container">
+      <div className="register-card">
 
         <h3 className="text-center mb-3">Register</h3>
 

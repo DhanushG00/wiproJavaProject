@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "../utils/auth";
 import api from "../services/api";
+import "../styles/cart.css";
 
 const Cart = () => {
 
@@ -49,7 +50,7 @@ const handleCheckout = async () => {
     <>
       <Navbar />
 
-      <div className="container mt-4">
+      <div className="cart-page">
 
         <h3>🛒 Your Cart</h3>
 

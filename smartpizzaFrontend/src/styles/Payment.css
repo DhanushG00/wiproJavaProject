@@ -1,0 +1,58 @@
+/* ✅ PAGE */
+
+
+
+.payment-page {
+  padding: 40px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* ✅ TITLE */
+.payment-title {
+  font-size: 24px;
+  text-align:center;
+  margin-bottom: 30px;
+}
+
+/* ✅ CARD */
+.payment-card {
+  max-width: 500px;
+  margin: auto;
+
+  background: white;
+  padding: 25px;
+
+  border-radius: 8px;
+  border: 1px solid #ddd;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ✅ TEXT */
+.payment-card p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* ✅ BUTTON */
+.pay-btn {
+  width: 100%;
+  padding: 10px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #28a745;  /* simple green */
+  color: white;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* ✅ HOVER */
+.pay-btn:hover {
+  background: #218838;
+}

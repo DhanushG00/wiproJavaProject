@@ -1,45 +1,170 @@
+.details-page {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at top left, rgba(255,120,0,0.3), transparent),
+    radial-gradient(circle at bottom right, rgba(255,80,0,0.3), transparent),
+    linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)),
+    url("C:\Users\DH20695571\Downloads\loginbg.jpg");
+
+  background-size: cover !important;
+  background-position: center !important;
+
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
+/* ✅ MAIN CARD (GLASS UI) */
 .details-card {
-  border-radius: 12px;
+  width: 50%;
+  max-width: 2200px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 20px;
   overflow: hidden;
-  background: white;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255,255,255,0.2);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.6);
 }
 
 /* ✅ IMAGE */
 .details-img {
   width: 100%;
-  height: 400px;
+  height: 500px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 20px 0 0 20px;
 }
 
-/* ✅ TEXT */
-.rating {
-  color: orange;
-  font-size: 18px;
+/* ✅ LEFT IMAGE AREA */
+.details-card > div:first-child {
+  flex: 1;
+  min-height: 400px;
 }
 
+/* ✅ RIGHT CONTENT */
+.details-card > div:last-child {
+  flex: 1;
+  padding: 40px;
+}
+
+/* ✅ TITLE */
+.details-card h2 {
+  font-size: 34px;
+  font-weight: 700;
+
+  background: linear-gradient(90deg, #ffcc70, #ff6a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✅ DESCRIPTION */
 .desc {
-  color: #555;
-  margin-top: 10px;
+  margin-top: 15px;
+  color: #ccc;
+  line-height: 1.6;
 }
 
-/* ✅ QUANTITY */
+/* ✅ PRICE */
+.details-card h3 {
+  margin-top: 15px;
+  font-size: 28px;
+  color: #ffcc70;
+}
+
+/* ✅ RATING BADGE */
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  margin-top: 10px;
+
+  background: #2e7d32;
+  padding: 5px 10px;
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ✅ QUANTITY BOX */
 .qty-box {
   display: flex;
   align-items: center;
   gap: 15px;
+  margin-top: 20px;
 }
 
+/* ✅ QTY BUTTONS */
 .qty-box button {
   width: 40px;
   height: 40px;
-  font-size: 18px;
-  border: none;
-  background: #eee;
-  border-radius: 5px;
-}
 
-.qty-box span {
+  border: none;
+  border-radius: 8px;
+
+  background: rgba(255,255,255,0.1);
+  color: white;
+
   font-size: 18px;
   font-weight: bold;
+
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+/* ✅ BUTTON HOVER */
+.qty-box button:hover {
+  background: #ff6a00;
+}
+
+/* ✅ QTY TEXT */
+.qty-box span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ✅ ADD BUTTON (MODERN) */
+.add-btn {
+  background: linear-gradient(135deg, #ff6a00, #ff8c42);
+  border: none;
+  color: white;
+
+  font-weight: 600;
+  padding: 12px;
+
+  border-radius: 10px;
+
+  transition: 0.3s;
+}
+
+/* ✅ BUTTON HOVER */
+.add-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255,120,0,0.6);
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  .details-card {
+    flex-direction: column;
+  }
+
+  .details-img {
+    border-radius: 20px 20px 0 0;
+    height: 250px;
+  }
 }
